@@ -27,7 +27,21 @@ export default function MyTable({ data }) {
         {headerGroups.map(headerGroup => (
           <Tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <Th {...column.getHeaderProps()}>{column.render("Header")}</Th>
+              <Th
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+                isNumeric={column.isNumeric}
+              >
+                {column.render("Header")}
+                <chakra.span pl="4">
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <TriangleDownIcon arial-label="sorted descending" />
+                    ) : (
+                      <TriangleUpIcon arial-label="sorted ascending" />
+                    )
+                  ) : null}
+                </chakra.span>
+              </Th>
             ))}
           </Tr>
         ))}
