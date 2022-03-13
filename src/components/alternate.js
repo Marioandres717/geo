@@ -35,7 +35,7 @@ export const createAlternateNumbers = (township, quaterC) => {
       TWPUID,
       TWP,
       QSECT: quater.QSECT,
-      alternateNumber: `${GRID}-${TWP}-${quater.QSECT}`,
+      alternateNumber: `${GRID}${TWP}${quater.QSECT}`,
     }
   })
 
