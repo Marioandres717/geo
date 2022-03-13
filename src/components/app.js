@@ -63,13 +63,5 @@ export default function App() {
     }
   `)
   console.log(oSection, quarterC, township)
-  return (
-    <React.Fragment>
-      <MyTable data={oSection} />
-      <br />
-      <MyTable data={quarterC} />
-      <br />
-      <MyTable data={township} />
-    </React.Fragment>
-  )
+  return <MyTable data={township} />
 }
