@@ -1,6 +1,6 @@
 import { graphql, useStaticQuery } from "gatsby"
 import React from "react"
-
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react"
 import MyTable from "./table"
 
 export default function App() {
@@ -62,5 +62,24 @@ export default function App() {
       }
     }
   `)
-  return <MyTable title="Township" data={township} />
+  return (
+    <Tabs>
+      <TabList>
+        <Tab>O-Section</Tab>
+        <Tab>Quarter-C</Tab>
+        <Tab>Township</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+          <MyTable title="Township" data={township} />
+        </TabPanel>
+        <TabPanel>
+          <MyTable title="Quarter-C" data={quarterC} />
+        </TabPanel>
+        <TabPanel>
+          <MyTable title="O-Section" data={oSection} />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  )
 }
