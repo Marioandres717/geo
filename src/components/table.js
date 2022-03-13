@@ -25,27 +25,19 @@ import { useTable, useSortBy, usePagination } from "react-Table"
 
 import * as tableStyles from "./table.module.css"
 
-function getColumns({ edges }) {
-  const colHeaders = edges.length > 0 ? Object.keys(edges[0].node) : []
-  return colHeaders.map(header => ({
-    Header: header,
-    accessor: header,
-  }))
-}
-function getRows({ edges }) {
-  return edges.map(({ node }) => node)
-}
-
-export default function MyTable({ title, data }) {
-  const columns = React.useMemo(() => getColumns(data), [data])
-  const d = React.useMemo(() => getRows(data), [data])
-  const tableInstance = useTable({ columns, data: d }, useSortBy, usePagination)
+export default function MyTable({ title, columns, data }) {
+  const c = React.useMemo(() => columns, [])
+  const d = React.useMemo(() => data, [])
+  const tableInstance = useTable(
+    { columns: c, data: d },
+    useSortBy,
+    usePagination
+  )
   const pageSizeOptions = [5, 10, 20, 50, 100]
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    // rows,
     prepareRow,
     pageOptions,
     page,

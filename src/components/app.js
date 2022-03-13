@@ -2,6 +2,8 @@ import { graphql, useStaticQuery } from "gatsby"
 import React from "react"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react"
 import MyTable from "./table"
+import { getRows, getColumns } from "../utils/get-data-from-graphql"
+import { createAlternateNumbers } from "./alternate"
 
 export default function App() {
   const {
@@ -62,22 +64,39 @@ export default function App() {
       }
     }
   `)
+  const { columns, data } = createAlternateNumbers(township, quarterC)
   return (
     <Tabs>
       <TabList>
-        <Tab>O-Section</Tab>
-        <Tab>Quarter-C</Tab>
         <Tab>Township</Tab>
+        <Tab>Quarter-C</Tab>
+        <Tab>O-Section</Tab>
+        <Tab>Alternate #</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
-          <MyTable title="Township" data={township} />
+          <MyTable
+            title="Township"
+            data={getRows(township)}
+            columns={getColumns(township)}
+          />
         </TabPanel>
         <TabPanel>
-          <MyTable title="Quarter-C" data={quarterC} />
+          <MyTable
+            title="Quarter-C"
+            data={getRows(quarterC)}
+            columns={getColumns(quarterC)}
+          />
         </TabPanel>
         <TabPanel>
-          <MyTable title="O-Section" data={oSection} />
+          <MyTable
+            title="O-Section"
+            data={getRows(oSection)}
+            columns={getColumns(oSection)}
+          />
+        </TabPanel>
+        <TabPanel>
+          <MyTable title="Alternate Number" data={data} columns={columns} />
         </TabPanel>
       </TabPanels>
     </Tabs>
