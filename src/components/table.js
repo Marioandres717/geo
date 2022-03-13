@@ -21,7 +21,7 @@ import {
   ArrowBackIcon,
   ArrowForwardIcon,
 } from "@chakra-ui/icons"
-import { useTable, useSortBy, usePagination } from "react-Table"
+import { useTable, useSortBy, usePagination } from "react-table"
 
 import * as tableStyles from "./table.module.css"
 
