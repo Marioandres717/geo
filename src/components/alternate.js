@@ -1,6 +1,4 @@
-import React from "react"
-import MyTable from "./table"
-import { getRows, getColumns } from "../utils/get-data-from-graphql"
+import { getRows } from "../utils/get-data-from-graphql"
 
 const mapGeoSectToNumber = {
   NE: "100",
