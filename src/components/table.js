@@ -7,11 +7,11 @@ import {
   Th,
   Td,
   chakra,
-  Button,
   Container,
   Select,
   Input,
   IconButton,
+  TableCaption,
 } from "@chakra-ui/react"
 import {
   TriangleDownIcon,
@@ -36,7 +36,7 @@ function getRows({ edges }) {
   return edges.map(({ node }) => node)
 }
 
-export default function MyTable({ data }) {
+export default function MyTable({ title, data }) {
   const columns = React.useMemo(() => getColumns(data), [data])
   const d = React.useMemo(() => getRows(data), [data])
   const tableInstance = useTable({ columns, data: d }, useSortBy, usePagination)
@@ -61,6 +61,7 @@ export default function MyTable({ data }) {
   return (
     <React.Fragment>
       <Table {...getTableProps()}>
+        <TableCaption>{title}</TableCaption>
         <Thead>
           {headerGroups.map(headerGroup => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -124,6 +125,7 @@ export default function MyTable({ data }) {
             {pageIndex + 1} of {pageOptions.length}
           </em>
         </chakra.span>
+
         <Container className={tableStyles.goToPage}>
           <chakra.label>Go to page:</chakra.label>
           <Input

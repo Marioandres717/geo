@@ -14,7 +14,6 @@
 .container > span {
   min-width: fit-content;
   border-right: 1px solid black;
-  border-left: 1px solid black;
   padding: 8px;
 }
 

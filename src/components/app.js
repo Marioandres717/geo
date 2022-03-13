@@ -62,6 +62,5 @@ export default function App() {
       }
     }
   `)
-  console.log(oSection, quarterC, township)
-  return <MyTable data={township} />
+  return <MyTable title="Township" data={township} />
 }
