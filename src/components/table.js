@@ -26,8 +26,8 @@ import { useTable, useSortBy, usePagination } from "react-table"
 import * as tableStyles from "./table.module.css"
 
 export default function MyTable({ title, columns, data }) {
-  const c = React.useMemo(() => columns, [])
-  const d = React.useMemo(() => data, [])
+  const c = React.useMemo(() => columns, [columns])
+  const d = React.useMemo(() => data, [data])
   const tableInstance = useTable(
     { columns: c, data: d },
     useSortBy,
