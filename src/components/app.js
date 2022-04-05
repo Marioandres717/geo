@@ -12,7 +12,7 @@ import { parse } from "json2csv"
 
 import MyTable from "./table"
 import { getRows, getColumns } from "../utils/get-data-from-graphql"
-import { createAlternateNumbers } from "./alternate"
+import { createAlternateNumbers, mapGeoSectToNumber } from "./alternate"
 
 export default function App() {
   const {
@@ -75,10 +75,31 @@ export default function App() {
   `)
   const { columns, data } = createAlternateNumbers(township, quarterC)
 
-  function downloadBlob(filename, contentType) {
+  function downloadAlternateNumber(filename, contentType) {
     const { columns, data } = createAlternateNumbers(township, quarterC)
     try {
       const content = parse(data, { fields: columns.map(col => col.accessor) })
+      const blob = new Blob([content], { type: contentType })
+      const url = URL.createObjectURL(blob)
+      const pom = document.createElement("a")
+      pom.href = url
+      pom.setAttribute("download", filename)
+      pom.click()
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  function downloadQuarterC(filename, contentType) {
+    const columns = getColumns(quarterC)
+    const data = getRows(quarterC)
+    const quaterCDataWithQSectMapped = data.map(({ QSECT, ...rest }) => ({
+      ...rest,
+      QSECT: mapGeoSectToNumber[QSECT],
+    }))
+    try {
+      const content = parse(quaterCDataWithQSectMapped, {
+        fields: columns.map(col => col.accessor),
+      })
       const blob = new Blob([content], { type: contentType })
       const url = URL.createObjectURL(blob)
       const pom = document.createElement("a")
@@ -126,11 +147,23 @@ export default function App() {
         </TabPanel>
         <TabPanel>
           <Button
+            style={{ margin: "10px" }}
             onClick={() =>
-              downloadBlob("quater_c.csv", "text/csv;charset=utf-8;")
+              downloadAlternateNumber(
+                "alternate_number.csv",
+                "text/csv;charset=utf-8;"
+              )
             }
           >
-            Export to CSV
+            Export Alternate Number to CSV
+          </Button>
+          <Button
+            style={{ margin: "10px" }}
+            onClick={() =>
+              downloadQuarterC("quater_c.csv", "text/csv;charset=utf-8;")
+            }
+          >
+            Export Quater C to CSV
           </Button>
         </TabPanel>
       </TabPanels>

@@ -1,6 +1,6 @@
 import { getRows } from "../utils/get-data-from-graphql"
 
-const mapGeoSectToNumber = {
+export const mapGeoSectToNumber = {
   NE: "100",
   NW: "200",
   SE: "300",
@@ -33,11 +33,8 @@ export const createAlternateNumbers = (township, quaterC) => {
     .map(({ TWP, GRID, RGE }) => {
       const quarter = quaterPartial
         .filter(({ PRGE, PTWP }) => RGE === PRGE && TWP === PTWP)
-        .map(({ PSECT, QSECT, ...rest }) => ({
+        .map(({ PSECT, QSECT }) => ({
           alternateNumber: `${GRID}${PSECT}${QSECT}`,
-          PSECT,
-          QSECT,
-          ...rest,
         }))
 
       return quarter
@@ -46,22 +43,6 @@ export const createAlternateNumbers = (township, quaterC) => {
 
   return {
     columns: [
-      {
-        Header: "PRGE",
-        accessor: "PRGE",
-      },
-      {
-        Header: "PTWP",
-        accessor: "PTWP",
-      },
-      {
-        Header: "PSECT",
-        accessor: "PSECT",
-      },
-      {
-        Header: "QSECT",
-        accessor: "QSECT",
-      },
       {
         Header: "Alternate Number",
         accessor: "alternateNumber",
