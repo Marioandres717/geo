@@ -23,24 +23,21 @@ export const createAlternateNumbers = (township, quaterC) => {
       GRID: `000${GRID}`,
     }))
 
-  const quaterPartial = quaterCData.map(({ PSECT, QSECT, PTWP, PRGE }) => ({
+  const quaterPartial = quaterCData.map(({ PSECT, QSECT, ...rest }) => ({
     PSECT: addLeadingZero(PSECT),
     QSECT: mapGeoSectToNumber[QSECT],
-    PTWP,
-    PRGE,
+    ...rest,
   }))
 
   const alternateNumbers = townPartial
     .map(({ TWP, GRID, RGE }) => {
       const quarter = quaterPartial
         .filter(({ PRGE, PTWP }) => RGE === PRGE && TWP === PTWP)
-        .map(({ PSECT, QSECT }) => ({
-          GRID,
-          TWP,
-          RGE,
+        .map(({ PSECT, QSECT, ...rest }) => ({
+          alternateNumber: `${GRID}${PSECT}${QSECT}`,
           PSECT,
           QSECT,
-          alternateNumber: `${GRID}${PSECT}${QSECT}`,
+          ...rest,
         }))
 
       return quarter
@@ -50,16 +47,12 @@ export const createAlternateNumbers = (township, quaterC) => {
   return {
     columns: [
       {
-        Header: "GRID",
-        accessor: "GRID",
+        Header: "PRGE",
+        accessor: "PRGE",
       },
       {
-        Header: "RGE",
-        accessor: "RGE",
-      },
-      {
-        Header: "TWP",
-        accessor: "TWP",
+        Header: "PTWP",
+        accessor: "PTWP",
       },
       {
         Header: "PSECT",

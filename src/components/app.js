@@ -127,7 +127,7 @@ export default function App() {
         <TabPanel>
           <Button
             onClick={() =>
-              downloadBlob("alternate_number.csv", "text/csv;charset=utf-8;")
+              downloadBlob("quater_c.csv", "text/csv;charset=utf-8;")
             }
           >
             Export to CSV
