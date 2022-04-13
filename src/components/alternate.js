@@ -1,6 +1,6 @@
 import { getRows } from "../utils/get-data-from-graphql"
 
-export const mapGeoSectToNumber = {
+const mapGeoSectToNumber = {
   NE: "100",
   NW: "200",
   SE: "300",
@@ -23,10 +23,11 @@ export const createAlternateNumbers = (township, quaterC) => {
       GRID: `000${GRID}`,
     }))
 
-  const quaterPartial = quaterCData.map(({ PSECT, QSECT, ...rest }) => ({
+  const quaterPartial = quaterCData.map(({ PSECT, QSECT, PTWP, PRGE }) => ({
     PSECT: addLeadingZero(PSECT),
     QSECT: mapGeoSectToNumber[QSECT],
-    ...rest,
+    PTWP,
+    PRGE,
   }))
 
   const alternateNumbers = townPartial
@@ -34,6 +35,11 @@ export const createAlternateNumbers = (township, quaterC) => {
       const quarter = quaterPartial
         .filter(({ PRGE, PTWP }) => RGE === PRGE && TWP === PTWP)
         .map(({ PSECT, QSECT }) => ({
+          GRID,
+          TWP,
+          RGE,
+          PSECT,
+          QSECT,
           alternateNumber: `${GRID}${PSECT}${QSECT}`,
         }))
 
@@ -43,6 +49,26 @@ export const createAlternateNumbers = (township, quaterC) => {
 
   return {
     columns: [
+      {
+        Header: "GRID",
+        accessor: "GRID",
+      },
+      {
+        Header: "RGE",
+        accessor: "RGE",
+      },
+      {
+        Header: "TWP",
+        accessor: "TWP",
+      },
+      {
+        Header: "PSECT",
+        accessor: "PSECT",
+      },
+      {
+        Header: "QSECT",
+        accessor: "QSECT",
+      },
       {
         Header: "Alternate Number",
         accessor: "alternateNumber",
