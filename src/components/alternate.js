@@ -41,6 +41,7 @@ export const createAlternateNumbers = (township, quaterC) => {
           PSECT,
           QSECT,
           alternateNumber: `${GRID}${PSECT}${QSECT}`,
+          rgeTGwpQsectPsect: `${RGE}${TWP}${QSECT}${PSECT}`,
         }))
 
       return quarter
@@ -72,6 +73,10 @@ export const createAlternateNumbers = (township, quaterC) => {
       {
         Header: "Alternate Number",
         accessor: "alternateNumber",
+      },
+      {
+        Header: "RgeTGwpQsectPsect",
+        accessor: "rgeTGwpQsectPsect",
       },
     ],
     data: alternateNumbers,
