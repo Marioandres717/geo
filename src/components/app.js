@@ -15,64 +15,45 @@ import { getRows, getColumns } from "../utils/get-data-from-graphql"
 import { createAlternateNumbers } from "./alternate"
 
 export default function App() {
-  const {
-    allOSectionCsv: oSection,
-    allQuarterCCsv: quarterC,
-    allTownshipCsv: township,
-  } = useStaticQuery(graphql`
-    query myQuery {
-      allOSectionCsv {
-        totalCount
-        edges {
-          node {
-            PPID
-            EFFDT
-            EXPDT
-            FEATURECD
-            SECT
-            PTWPPPID
-            PTWP
-            PRGE
-            PMER
+  const { allQuarterCCsv: quarterC, allTownshipCsv: township } =
+    useStaticQuery(graphql`
+      query myQuery {
+        allQuarterCCsv {
+          totalCount
+          edges {
+            node {
+              PPID
+              EFFDT
+              EXPDT
+              FEATURECD
+              QSECT
+              PSECTPPID
+              PSECT
+              PTWPPPID
+              PTWP
+              PRGE
+              PMER
+            }
+          }
+        }
+        allTownshipCsv {
+          totalCount
+          edges {
+            node {
+              PPID
+              EFFDT
+              EXPDT
+              TWPUID
+              TWP
+              RGE
+              MER
+              TRM
+              GRID
+            }
           }
         }
       }
-      allQuarterCCsv {
-        totalCount
-        edges {
-          node {
-            PPID
-            EFFDT
-            EXPDT
-            FEATURECD
-            QSECT
-            PSECTPPID
-            PSECT
-            PTWPPPID
-            PTWP
-            PRGE
-            PMER
-          }
-        }
-      }
-      allTownshipCsv {
-        totalCount
-        edges {
-          node {
-            PPID
-            EFFDT
-            EXPDT
-            TWPUID
-            TWP
-            RGE
-            MER
-            TRM
-            GRID
-          }
-        }
-      }
-    }
-  `)
+    `)
   const { columns, data } = createAlternateNumbers(township, quarterC)
 
   function downloadBlob(filename, contentType) {
@@ -95,7 +76,6 @@ export default function App() {
       <TabList>
         <Tab>Township</Tab>
         <Tab>Quarter-C</Tab>
-        <Tab>O-Section</Tab>
         <Tab>Alternate #</Tab>
         <Tab>Export to CSV</Tab>
       </TabList>
@@ -112,13 +92,6 @@ export default function App() {
             title="Quarter-C"
             data={getRows(quarterC)}
             columns={getColumns(quarterC)}
-          />
-        </TabPanel>
-        <TabPanel>
-          <MyTable
-            title="O-Section"
-            data={getRows(oSection)}
-            columns={getColumns(oSection)}
           />
         </TabPanel>
         <TabPanel>
