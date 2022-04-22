@@ -32,7 +32,7 @@ export const createAlternateNumbers = (township, quaterC) => {
 
   const alternateNumbers = townPartial
     .map(({ TWP, GRID, RGE }) => {
-      const quarter = quaterPartial
+      return quaterPartial
         .filter(({ PRGE, PTWP }) => RGE === PRGE && TWP === PTWP)
         .map(({ PSECT, QSECT }) => ({
           GRID,
@@ -43,8 +43,6 @@ export const createAlternateNumbers = (township, quaterC) => {
           alternateNumber: `${GRID}${PSECT}${QSECT}`,
           rgeTGwpQsectPsect: `${RGE}${TWP}${QSECT}${PSECT}`,
         }))
-
-      return quarter
     })
     .flat()
 
