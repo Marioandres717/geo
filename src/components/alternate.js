@@ -20,7 +20,7 @@ export const createAlternateNumbers = (township, quaterC) => {
     .map(({ TWP, GRID, RGE }) => ({
       TWP,
       RGE,
-      GRID: `000${GRID}`,
+      GRID: GRID.length === 1 ? `000${GRID}` : `00${GRID}`,
     }))
 
   const quaterPartial = quaterCData.map(({ PSECT, QSECT, PTWP, PRGE }) => ({
